@@ -1,7 +1,7 @@
 {
-  "name": "car-booking-app-root",
+  "name": "cal-com-clone",
   "version": "1.0.0",
-  "description": "Root package for Railway Deployment",
+  "description": "Cal.com clone for Railway Deployment",
   "scripts": {
     "install": "cd server && npm install",
     "build": "cd server && npm install",
