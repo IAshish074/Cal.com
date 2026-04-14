@@ -73,7 +73,7 @@ exports.getAvailableTimeSlots = async (req, res) => {
     const eventType = eventTypes[0];
 
     const targetDate = new Date(date + 'T00:00:00Z'); 
-    const dayOfWeek = (targetDate.getUTCDay() + 6) % 7; // Convert 0=Sun,1=Mon to 0=Mon, 6=Sun like standard
+    const dayOfWeek = targetDate.getUTCDay(); // Matches standard JS (0=Sun, 1=Mon) used by frontend
     
     const [schedules] = await pool.query('SELECT * FROM availability_schedules WHERE user_id = ? LIMIT 1', [eventType.user_id]);
     if (schedules.length === 0) return res.json({ slots: [] });
