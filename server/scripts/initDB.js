@@ -118,12 +118,12 @@ async function initDB() {
     }
 
     console.log('Database initialization successful!');
-    process.exit(0);
-
+    // Removed process.exit(0) to allow server continuity
   } catch (error) {
-    console.error('Error initializing database:', error);
-    process.exit(1);
+    console.error('Error initializing database at initDB.js:', error);
+    // Removed process.exit(1)
+    throw error;
   }
 }
 
-initDB();
+module.exports = initDB;

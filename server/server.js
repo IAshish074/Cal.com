@@ -21,6 +21,14 @@ app.use(express.json());
 app.use('/api', apiRoutes);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Server running on port ${PORT}`);
+  
+  try {
+    const initDB = require('./scripts/initDB');
+    await initDB();
+    console.log('Automated Database Sync check completed.');
+  } catch (error) {
+    console.error('Failed to auto-sync Aiven database schemas:', error);
+  }
 });
