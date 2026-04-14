@@ -5,7 +5,16 @@ const apiRoutes = require('./routes/api');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: true,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// Explicit preflight handler for all routes
+app.options('*', cors());
+
 app.use(express.json());
 
 app.use('/api', apiRoutes);
