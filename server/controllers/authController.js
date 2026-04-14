@@ -30,6 +30,7 @@ exports.login = async (req, res) => {
       user: { id: user.id, username: user.username, email: user.email }
     });
   } catch (error) {
+    console.error("LOGIN API ERROR:", error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -98,6 +99,7 @@ exports.register = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("REGISTER API ERROR:", error);
+    res.status(500).json({ error: error.message, stack: process.env.NODE_ENV === 'development' ? error.stack : undefined });
   }
 };

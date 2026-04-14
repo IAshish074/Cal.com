@@ -4,8 +4,15 @@ require('dotenv').config();
 async function initDB() {
   try {
  
-    const connection = await mysql.createConnection(process.env.DB_URL);
-    console.log('Connected to database via DB_URL.');
+    const connection = await mysql.createConnection({
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      ssl: { rejectUnauthorized: false }
+    });
+    console.log('Connected to Aiven database via SSL for initialization.');
 
  
     await connection.query(`
@@ -13,6 +20,7 @@ async function initDB() {
         id INT AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(255) NOT NULL UNIQUE,
         email VARCHAR(255) NOT NULL UNIQUE,
+        password VARCHAR(255) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
