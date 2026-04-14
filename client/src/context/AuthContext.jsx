@@ -52,7 +52,10 @@ export function AuthProvider({ children }) {
   };
 
   const register = async (username, email, password) => {
-    await axios.post('/api/auth/register', { username, email, password });
+    const res = await axios.post('/api/auth/register', { username, email, password });
+    localStorage.setItem('token', res.data.token);
+    setToken(res.data.token);
+    setUser(res.data.user);
   };
 
   const logout = () => {
