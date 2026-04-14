@@ -1,9 +1,9 @@
 const mysql = require('mysql2/promise');
+const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
 async function initDB() {
   try {
- 
     const connection = await mysql.createConnection({
       host: process.env.DB_HOST,
       port: process.env.DB_PORT,
@@ -12,9 +12,10 @@ async function initDB() {
       database: process.env.DB_NAME,
       ssl: { rejectUnauthorized: false }
     });
+
     console.log('Connected to Aiven database via SSL for initialization.');
 
- 
+    // ✅ USERS TABLE
     await connection.query(`
       CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -25,7 +26,7 @@ async function initDB() {
       )
     `);
 
-
+    // ✅ EVENT TYPES
     await connection.query(`
       CREATE TABLE IF NOT EXISTS event_types (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -39,7 +40,7 @@ async function initDB() {
       )
     `);
 
- 
+    // ✅ AVAILABILITY SCHEDULES
     await connection.query(`
       CREATE TABLE IF NOT EXISTS availability_schedules (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -52,19 +53,19 @@ async function initDB() {
       )
     `);
 
-
+    // ✅ AVAILABILITY SLOTS
     await connection.query(`
       CREATE TABLE IF NOT EXISTS availability_slots (
         id INT AUTO_INCREMENT PRIMARY KEY,
         schedule_id INT NOT NULL,
-        day_of_week INT NOT NULL, -- 0 (Mon) to 6 (Sun) or similar convention
+        day_of_week INT NOT NULL,
         start_time TIME NOT NULL,
         end_time TIME NOT NULL,
         FOREIGN KEY (schedule_id) REFERENCES availability_schedules(id) ON DELETE CASCADE
       )
     `);
 
-
+    // ✅ BOOKINGS
     await connection.query(`
       CREATE TABLE IF NOT EXISTS bookings (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -79,34 +80,43 @@ async function initDB() {
       )
     `);
 
- 
+    // ✅ CHECK IF ADMIN EXISTS
     const [users] = await connection.query('SELECT * FROM users WHERE id = 1');
+
     if (users.length === 0) {
-      await connection.query(`
-        INSERT INTO users (username, email) VALUES ('admin', 'admin@calclone.com')
-      `);
+      // 🔥 FIX: Add password (IMPORTANT)
+      const hashedPassword = await bcrypt.hash('admin123', 10);
+
+      await connection.query(
+        `INSERT INTO users (username, email, password) VALUES (?, ?, ?)`,
+        ['admin', 'admin@calclone.com', hashedPassword]
+      );
+
       console.log('Default user seeded.');
-      
- 
+
+      // Create default schedule
       const [scheduleResult] = await connection.query(`
-        INSERT INTO availability_schedules (user_id, name, timezone, is_default) 
+        INSERT INTO availability_schedules (user_id, name, timezone, is_default)
         VALUES (1, 'Working Hours', 'UTC', TRUE)
       `);
-      
-      const scheduleId = scheduleResult.insertId;
-      
 
-      for(let i=0; i<5; i++) {
-        await connection.query(`
-          INSERT INTO availability_slots (schedule_id, day_of_week, start_time, end_time)
-          VALUES (?, ?, '09:00:00', '17:00:00')
-        `, [scheduleId, i]); // 0=Mon, 1=Tue etc up to 4=Fri
+      const scheduleId = scheduleResult.insertId;
+
+      // Insert slots (Mon–Fri)
+      for (let i = 0; i < 5; i++) {
+        await connection.query(
+          `INSERT INTO availability_slots (schedule_id, day_of_week, start_time, end_time)
+           VALUES (?, ?, '09:00:00', '17:00:00')`,
+          [scheduleId, i]
+        );
       }
+
       console.log('Default availability seeded.');
     }
 
     console.log('Database initialization successful!');
     process.exit(0);
+
   } catch (error) {
     console.error('Error initializing database at initDB.js:', error);
     process.exit(1);
