@@ -4,7 +4,11 @@ require('dotenv').config();
 
 async function migrateAuth() {
   try {
-    const connection = await mysql.createConnection(process.env.DB_URL);
+    const dbUrl = process.env.MYSQL_URL || process.env.DATABASE_URL || process.env.DB_URL;
+    if (!dbUrl) {
+      throw new Error('No database URL found. Set MYSQL_URL, DATABASE_URL, or DB_URL.');
+    }
+    const connection = await mysql.createConnection(dbUrl);
 
     console.log('Checking if password column exists in users table...');
     
