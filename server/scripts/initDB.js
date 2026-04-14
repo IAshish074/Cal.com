@@ -4,17 +4,8 @@ require('dotenv').config();
 async function initDB() {
   try {
  
-    const connection = await mysql.createConnection({
-      host: process.env.DB_HOST || 'localhost',
-      user: process.env.DB_USER || 'root',
-      password: process.env.DB_PASSWORD || '',
-    });
-
-    const dbName = process.env.DB_NAME || 'cal_clone';
-    await connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\`;`);
-    console.log(`Database '${dbName}' created or already exists.`);
-    
-    await connection.query(`USE \`${dbName}\`;`);
+    const connection = await mysql.createConnection(process.env.DB_URL);
+    console.log('Connected to database via DB_URL.');
 
  
     await connection.query(`

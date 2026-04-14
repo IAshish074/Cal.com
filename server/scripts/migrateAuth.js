@@ -4,12 +4,7 @@ require('dotenv').config();
 
 async function migrateAuth() {
   try {
-    const connection = await mysql.createConnection({
-      host: process.env.DB_HOST || 'localhost',
-      user: process.env.DB_USER || 'root',
-      password: process.env.DB_PASSWORD || '',
-      database: process.env.DB_NAME || 'cal_clone',
-    });
+    const connection = await mysql.createConnection(process.env.DB_URL);
 
     console.log('Checking if password column exists in users table...');
     
