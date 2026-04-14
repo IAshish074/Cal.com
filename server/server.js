@@ -6,6 +6,7 @@ const apiRoutes = require('./routes/api');
 const app = express();
 
 app.use(cors({
+<<<<<<< HEAD
   origin: true,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
@@ -15,6 +16,14 @@ app.use(cors({
 // Explicit preflight handler for all routes
 app.options('*', cors());
 
+=======
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
+  credentials: true
+}));
+app.options('*', cors());
+>>>>>>> 3492965 (fix deployment start script)
 app.use(express.json());
 
 app.use('/api', apiRoutes);
