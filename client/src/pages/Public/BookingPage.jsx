@@ -19,14 +19,6 @@ export default function BookingPage() {
   const today = startOfToday();
   const [currentMonth, setCurrentMonth] = useState(startOfMonth(today));
 
-  useEffect(() => {
-    fetchEventType();
-  }, [slug]);
-
-  useEffect(() => {
-    if (selectedDate) fetchSlots(selectedDate);
-  }, [selectedDate]);
-
   async function fetchEventType() {
     try {
       const res = await axios.get(`/api/event-types/${username}/${slug}`);
@@ -35,6 +27,10 @@ export default function BookingPage() {
       console.error('Event not found');
     }
   }
+
+  useEffect(() => {
+    fetchEventType();
+  }, [slug]);
 
   async function fetchSlots(date) {
     setLoadingSlots(true);
@@ -48,6 +44,10 @@ export default function BookingPage() {
     }
     setLoadingSlots(false);
   }
+
+  useEffect(() => {
+    if (selectedDate) fetchSlots(selectedDate);
+  }, [selectedDate]);
 
   const submitBooking = async (e) => {
     e.preventDefault();

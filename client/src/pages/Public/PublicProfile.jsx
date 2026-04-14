@@ -8,11 +8,6 @@ export default function PublicProfile() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    
-    fetchEvents();
-  }, [username]);
-
   async function fetchEvents() {
     try {
       const res = await axios.get('/api/event-types');
@@ -23,6 +18,10 @@ export default function PublicProfile() {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    fetchEvents();
+  }, [username]);
 
   if (loading) return <div className="flex h-screen items-center justify-center bg-gray-50 text-gray-500">Loading...</div>;
 

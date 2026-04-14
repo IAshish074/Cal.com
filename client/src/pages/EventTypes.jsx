@@ -11,10 +11,6 @@ export default function EventTypes() {
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({ title: '', description: '', duration_minutes: 30, slug: '' });
 
-  useEffect(() => {
-    fetchEvents();
-  }, []);
-
   async function fetchEvents() {
     try {
       const res = await axios.get('/api/event-types');
@@ -23,6 +19,10 @@ export default function EventTypes() {
       console.error(err);
     }
   }
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
 
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this event type?')) return;

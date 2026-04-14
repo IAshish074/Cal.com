@@ -7,10 +7,6 @@ export default function Bookings() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('upcoming'); // 'upcoming', 'past', 'cancelled'
 
-  useEffect(() => {
-    fetchBookings();
-  }, []);
-
   async function fetchBookings() {
     try {
       const res = await axios.get('/api/bookings');
@@ -21,6 +17,10 @@ export default function Bookings() {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    fetchBookings();
+  }, []);
 
   const cancelBooking = async (id) => {
     if (!window.confirm('Are you sure you want to cancel this booking?')) return;

@@ -36,8 +36,14 @@ exports.createBooking = async (req, res) => {
   try {
     const { event_type_id, booker_name, booker_email, start_time, end_time } = req.body;
     
- 
-    
+    const [existing] = await pool.query(`
+      SELECT * FROM bookings 
+      WHERE event_type_id = ? AND status != 'cancelled'
+      AND (
+        (start_time <= ? AND end_time > ?) OR
+        (start_time < ? AND end_time >= ?)
+      )
+    `, [event_type_id, start_time, start_time, end_time, end_time]);
     if (existing.length > 0) {
       return res.status(400).json({ error: 'Time slot is already booked.' });
     }
@@ -75,9 +81,11 @@ exports.getAvailableTimeSlots = async (req, res) => {
     
     const [daySlots] = await pool.query('SELECT * FROM availability_slots WHERE schedule_id = ? AND day_of_week = ?', [schedule.id, dayOfWeek]);
     
- 
-
-
+    const [bookings] = await pool.query(`
+      SELECT * FROM bookings 
+      WHERE event_type_id = ? AND status != 'cancelled'
+      AND DATE(start_time) = ?
+    `, [eventType.id, date]);
     const availableSlots = [];
     const durationMs = eventType.duration_minutes * 60 * 1000;
 

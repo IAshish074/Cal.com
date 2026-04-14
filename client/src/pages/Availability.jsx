@@ -17,10 +17,6 @@ export default function Availability() {
   const [loading, setLoading] = useState(true);
   const [timezone, setTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone);
 
-  useEffect(() => {
-    fetchAvailability();
-  }, []);
-
   async function fetchAvailability() {
     try {
       const res = await axios.get('/api/availability');
@@ -47,6 +43,10 @@ export default function Availability() {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    fetchAvailability();
+  }, []);
 
   const handleSave = async () => {
     try {
