@@ -80,11 +80,13 @@ async function initDB() {
       )
     `);
 
-    // ✅ CHECK IF ADMIN EXISTS
-    const [users] = await connection.query('SELECT * FROM users WHERE id = 1');
+    // ✅ CHECK ADMIN USER
+    const [users] = await connection.query(
+      'SELECT * FROM users WHERE id = 1'
+    );
 
     if (users.length === 0) {
-      // 🔥 FIX: Add password (IMPORTANT)
+      // 🔥 FIX: add password (important)
       const hashedPassword = await bcrypt.hash('admin123', 10);
 
       await connection.query(
@@ -94,18 +96,19 @@ async function initDB() {
 
       console.log('Default user seeded.');
 
-      // Create default schedule
-      const [scheduleResult] = await connection.query(`
-        INSERT INTO availability_schedules (user_id, name, timezone, is_default)
-        VALUES (1, 'Working Hours', 'UTC', TRUE)
-      `);
+      // ✅ Default schedule
+      const [scheduleResult] = await connection.query(
+        `INSERT INTO availability_schedules (user_id, name, timezone, is_default)
+         VALUES (1, 'Working Hours', 'UTC', TRUE)`
+      );
 
       const scheduleId = scheduleResult.insertId;
 
-      // Insert slots (Mon–Fri)
+      // ✅ Slots (Mon–Fri)
       for (let i = 0; i < 5; i++) {
         await connection.query(
-          `INSERT INTO availability_slots (schedule_id, day_of_week, start_time, end_time)
+          `INSERT INTO availability_slots 
+           (schedule_id, day_of_week, start_time, end_time)
            VALUES (?, ?, '09:00:00', '17:00:00')`,
           [scheduleId, i]
         );
@@ -118,7 +121,7 @@ async function initDB() {
     process.exit(0);
 
   } catch (error) {
-    console.error('Error initializing database at initDB.js:', error);
+    console.error('Error initializing database:', error);
     process.exit(1);
   }
 }
