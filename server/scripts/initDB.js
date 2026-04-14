@@ -1,6 +1,6 @@
 const mysql = require('mysql2/promise');
 const bcrypt = require('bcryptjs');
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
 
 async function initDB() {
   try {
@@ -127,3 +127,6 @@ async function initDB() {
 }
 
 module.exports = initDB;
+if (require.main === module) {
+  initDB();
+}
