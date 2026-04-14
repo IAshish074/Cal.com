@@ -14,7 +14,7 @@ export default function BookingPage() {
   const [loadingSlots, setLoadingSlots] = useState(false);
   
   const [form, setForm] = useState({ name: '', email: '' });
-  const [bookingStatus, setBookingStatus] = useState('calendar'); // 'calendar' | 'form' | 'success'
+  const [bookingStatus, setBookingStatus] = useState('calendar'); 
 
   const today = startOfToday();
   const [currentMonth, setCurrentMonth] = useState(startOfMonth(today));
@@ -74,7 +74,7 @@ export default function BookingPage() {
     }
   };
 
-  // Calendar generation helpers
+  
   const daysInMonth = getDaysInMonth(currentMonth);
   const startingDayOfWeek = getDay(currentMonth);
   const calendarDays = [];
@@ -121,7 +121,7 @@ export default function BookingPage() {
     <div className="flex min-h-screen bg-gray-50 items-center justify-center py-10 px-4">
       <div className="bg-white max-w-5xl w-full rounded-2xl shadow-sm border border-gray-200 flex flex-col md:flex-row overflow-hidden min-h-[500px]">
         
-        {/* Left pane: Event Info */}
+      
         <div className="w-full md:w-1/3 bg-white p-6 md:p-8 md:border-r border-b md:border-b-0 border-gray-200 shrink-0">
           <Link to={`/${username}`} className="text-gray-500 hover:text-gray-900 inline-block mb-6 pt-1">
             <div className="h-10 w-10 bg-gray-100 rounded-full flex items-center justify-center border font-bold">
@@ -147,7 +147,7 @@ export default function BookingPage() {
           </div>
         </div>
 
-        {/* Right pane: Interactions */}
+       
         <div className="flex-1 bg-white p-6 md:p-8">
           {bookingStatus === 'form' ? (
             <div className="max-w-md animate-fade-in">
@@ -198,7 +198,7 @@ export default function BookingPage() {
               <h2 className="text-xl font-bold mb-6">Select a Date & Time</h2>
               <div className="flex flex-col lg:flex-row gap-8">
                 
-                {/* Calendar View */}
+               
                 <div className="lg:w-1/2 xs:w-full">
                   <div className="flex justify-between items-center mb-4">
                     <span className="font-medium text-gray-900">
@@ -251,7 +251,7 @@ export default function BookingPage() {
                   </div>
                 </div>
 
-                {/* Time Slots */}
+               
                 {selectedDate && (
                   <div className="lg:w-1/2 flex flex-col h-72 lg:h-80 overflow-y-auto pr-2 custom-scrollbar">
                     <h3 className="font-semibold mb-4 text-gray-900">

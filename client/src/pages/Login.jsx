@@ -34,14 +34,12 @@ export default function AuthPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <div className="max-w-md w-full bg-white rounded-xl shadow-lg border border-gray-200 p-8">
         
-        {/* Logo */}
         <div className="flex justify-center mb-8">
           <div className="h-12 w-12 bg-black text-white flex items-center justify-center rounded-xl">
             <Calendar className="w-6 h-6" />
           </div>
         </div>
 
-        {/* Heading */}
         <h2 className="text-2xl font-bold text-center text-gray-900 mb-2">
           {isLogin ? "Welcome back" : "Create your account"}
         </h2>
@@ -50,17 +48,14 @@ export default function AuthPage() {
           {isLogin ? "Log in to manage your schedule" : "Start scheduling meetings"}
         </p>
 
-        {/* Error */}
         {error && (
           <div className="bg-red-50 text-red-600 p-3 rounded-md mb-6 text-sm border text-center">
             {error}
           </div>
         )}
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
           
-          {/* Name (only for register) */}
           {!isLogin && (
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1">
@@ -77,7 +72,6 @@ export default function AuthPage() {
             </div>
           )}
 
-          {/* Email */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">
               Email
@@ -92,7 +86,6 @@ export default function AuthPage() {
             />
           </div>
 
-          {/* Password */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">
               Password
@@ -107,7 +100,6 @@ export default function AuthPage() {
             />
           </div>
 
-          {/* Button */}
           <button
             type="submit"
             className="w-full bg-black text-white font-medium py-3 rounded-md hover:bg-gray-800 transition"
@@ -116,7 +108,6 @@ export default function AuthPage() {
           </button>
         </form>
 
-        {/* Toggle */}
         <div className="mt-6 text-center text-sm">
           {isLogin ? (
             <p>

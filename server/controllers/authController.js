@@ -46,8 +46,7 @@ exports.me = async (req, res) => {
   }
 };
 
-// Logout is handled purely client-side by destroying the JWT. 
-// We still provide a success response for symmetry.
+
 exports.logout = (req, res) => {
   res.json({ message: 'Logout successful' });
 };
@@ -56,12 +55,12 @@ exports.register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    // Validate
+ Validate
     if (!username || !email || !password) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
-    // Check if user already exists
+
     const [existingUsers] = await pool.query(
       "SELECT * FROM users WHERE email = ? OR username = ?",
       [email, username]
@@ -71,17 +70,17 @@ exports.register = async (req, res) => {
       return res.status(400).json({ error: "User already exists" });
     }
 
-    // Hash password
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Insert user
+ 
     const [result] = await pool.query(
       "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
       [username, email, hashedPassword]
     );
 
-    // Generate token
+ 
     const token = jwt.sign(
       { id: result.insertId, username, email },
       JWT_SECRET,

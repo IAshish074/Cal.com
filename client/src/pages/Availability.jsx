@@ -29,7 +29,7 @@ export default function Availability() {
         setTimezone(res.data.schedule.timezone);
       }
       
-      // Map slots to a more manageable state based on day_of_week
+
       const hydratedSlots = DAYS_OF_WEEK.map(day => {
         const daySlots = res.data.slots.filter(s => s.day_of_week === day.id);
         return {
@@ -50,7 +50,7 @@ export default function Availability() {
 
   const handleSave = async () => {
     try {
-      // Filter only enabled days and format
+      
       const payloadSlots = slots
         .filter(s => s.enabled)
         .map(s => ({

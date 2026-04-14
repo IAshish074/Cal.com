@@ -3,7 +3,7 @@ require('dotenv').config();
 
 async function initDB() {
   try {
-    // Connect without database first to create it if it doesn't exist
+ 
     const connection = await mysql.createConnection({
       host: process.env.DB_HOST || 'localhost',
       user: process.env.DB_USER || 'root',
@@ -16,7 +16,7 @@ async function initDB() {
     
     await connection.query(`USE \`${dbName}\`;`);
 
-    // Create users table
+ 
     await connection.query(`
       CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -26,7 +26,7 @@ async function initDB() {
       )
     `);
 
-    // Create event_types table
+
     await connection.query(`
       CREATE TABLE IF NOT EXISTS event_types (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -40,7 +40,7 @@ async function initDB() {
       )
     `);
 
-    // Create availability_schedules table
+ 
     await connection.query(`
       CREATE TABLE IF NOT EXISTS availability_schedules (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -53,7 +53,7 @@ async function initDB() {
       )
     `);
 
-    // Create availability_slots table
+
     await connection.query(`
       CREATE TABLE IF NOT EXISTS availability_slots (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -65,7 +65,7 @@ async function initDB() {
       )
     `);
 
-    // Create bookings table
+
     await connection.query(`
       CREATE TABLE IF NOT EXISTS bookings (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -80,7 +80,7 @@ async function initDB() {
       )
     `);
 
-    // Seed default user
+ 
     const [users] = await connection.query('SELECT * FROM users WHERE id = 1');
     if (users.length === 0) {
       await connection.query(`
@@ -88,7 +88,7 @@ async function initDB() {
       `);
       console.log('Default user seeded.');
       
-      // Default schedule
+ 
       const [scheduleResult] = await connection.query(`
         INSERT INTO availability_schedules (user_id, name, timezone, is_default) 
         VALUES (1, 'Working Hours', 'UTC', TRUE)
@@ -96,7 +96,7 @@ async function initDB() {
       
       const scheduleId = scheduleResult.insertId;
       
-      // Mon-Fri 9am-5pm
+
       for(let i=0; i<5; i++) {
         await connection.query(`
           INSERT INTO availability_slots (schedule_id, day_of_week, start_time, end_time)

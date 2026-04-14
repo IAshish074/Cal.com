@@ -9,7 +9,7 @@ export default function PublicProfile() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // In a real app we'd fetch by username. For this clone we fetch all events since they belong to user 1
+    
     fetchEvents();
   }, [username]);
 

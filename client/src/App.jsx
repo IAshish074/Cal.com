@@ -22,10 +22,10 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          {/* Public Routes */}
+          
           <Route path="/login" element={<Login />} />
 
-          {/* Protected Dashboard Routes */}
+        
           <Route path="/dashboard" element={
             <ProtectedRoute>
               <DashboardLayout />
@@ -37,11 +37,11 @@ function App() {
             <Route path="bookings" element={<Bookings />} />
           </Route>
 
-          {/* Public Profile & Booking (we don't protect these) */}
+         
           <Route path="/:username" element={<PublicProfile />} />
           <Route path="/:username/:slug" element={<BookingPage />} />
           
-          {/* Default Route */}
+          
           <Route path="/" element={<Navigate to="/dashboard/event-types" replace />} />
         </Routes>
       </Router>

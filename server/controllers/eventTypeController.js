@@ -1,6 +1,6 @@
 const pool = require('../config/db');
 
-// ✅ GET ALL EVENT TYPES (Logged-in user)
+
 exports.getEventTypes = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -16,7 +16,7 @@ exports.getEventTypes = async (req, res) => {
   }
 };
 
-// ✅ PUBLIC: GET EVENT BY SLUG + USERNAME
+ 
 exports.getEventTypeBySlug = async (req, res) => {
   try {
     const { username, slug } = req.params;
@@ -39,7 +39,7 @@ exports.getEventTypeBySlug = async (req, res) => {
   }
 };
 
-// ✅ CREATE EVENT
+
 exports.createEventType = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -65,7 +65,7 @@ exports.createEventType = async (req, res) => {
   }
 };
 
-// ✅ UPDATE EVENT
+
 exports.updateEventType = async (req, res) => {
   try {
     const { id } = req.params;
@@ -91,7 +91,7 @@ exports.updateEventType = async (req, res) => {
   }
 };
 
-// ✅ DELETE EVENT
+
 exports.deleteEventType = async (req, res) => {
   try {
     const { id } = req.params;
