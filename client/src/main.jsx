@@ -4,7 +4,7 @@ import axios from 'axios'
 import './index.css'
 import App from './App.jsx'
 
-axios.defaults.baseURL = import.meta.env.VITE_API_URL || '';
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'https://calcom-production-465f.up.railway.app/';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

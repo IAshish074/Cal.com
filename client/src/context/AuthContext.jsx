@@ -8,7 +8,7 @@ export function AuthProvider({ children }) {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [loading, setLoading] = useState(true);
 
-
+  // Setup Axios interceptor to always attach the JWT
   useEffect(() => {
     const interceptor = axios.interceptors.request.use(
       (config) => {
