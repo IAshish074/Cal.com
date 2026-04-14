@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
- "scripts": {
-  "start": "node server.js",
-  "dev": "nodemon server.js",
-  "build": "cd ../client && npm install && npm run build"
-},
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "cd ../client && npm install && npm run build"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
