@@ -2,6 +2,11 @@
 
 A full-stack, responsive scheduling and booking web application that mimics the design and user experience of Cal.com. This project allows users to set up availability, create dynamic event types, and provides a sleek public interface for clients to book meetings securely without double-booking.
 
+## 🌍 Live Deployment
+- **Frontend (Vercel)**: [https://cal-com-zeta.vercel.app](https://cal-com-zeta.vercel.app)
+- **Backend API (Render)**: [https://cal-com-dj1t.onrender.com](https://cal-com-dj1t.onrender.com)
+- **Database**: MySQL hosted on **Aiven**
+
 ## 🚀 Tech Stack
 
 **Frontend:**
