@@ -23,7 +23,7 @@ exports.updateAvailability = async (req, res) => {
     let [schedules] = await pool.query('SELECT * FROM availability_schedules WHERE user_id = ? LIMIT 1', [userId]);
     let scheduleId;
     if (schedules.length === 0) {
-      const [insertResult] = await pool.query('INSERT INTO availability_schedules (user_id, name, timezone) VALUES (?, "Working Hours", ?)', [userId, timezone || 'UTC']);
+      const [insertResult] = await pool.query('INSERT INTO availability_schedules (user_id, name, timezone) VALUES (?, \'Working Hours\', ?)', [userId, timezone || 'UTC']);
       scheduleId = insertResult.insertId;
     } else {
       scheduleId = schedules[0].id;
