@@ -23,7 +23,7 @@ exports.cancelBooking = async (req, res) => {
     await pool.query(`
       UPDATE bookings b
       JOIN event_types e ON b.event_type_id = e.id
-      SET b.status = "cancelled" 
+      SET b.status = 'cancelled' 
       WHERE b.id = ? AND e.user_id = ?
     `, [id, userId]);
     res.json({ message: 'Booking cancelled' });
